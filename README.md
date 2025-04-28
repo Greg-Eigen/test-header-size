@@ -1,3 +1,15 @@
+## To see that the value of max-header-size is not applied to this application's response header:
+1. Download the application 
+2. Open the application within IntelliJ and run the application
+3. From a command line, execute the following command: `curl 'http://localhost:8080/test-response-header-size' -i `
+4. Read the contents of response header 'custom-response-header'
+
+## To see that the value of max-header-size is not applied to request/response headers involved in http requests made FROM this application:
+1. Download the application
+2. Open the application within IntelliJ and run the application
+3. From a command line, execute the following command: `curl 'http://localhost:8080/make-backend-request' -i `
+4. Read the contents of response body
+
 ## Micronaut 4.7.6 Documentation
 
 - [User Guide](https://docs.micronaut.io/4.7.6/guide/index.html)
