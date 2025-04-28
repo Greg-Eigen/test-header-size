@@ -27,7 +27,7 @@ class Controller (
     fun makeBackendRequest(): HttpResponse<String> {
         val customRequestHeader = "xxxxxxxxxxx This  is  a  custom  request  header  value  that  is  100  characters  long. xxxxxxxxxx"
         val httpResponse: HttpResponse<String> = backendClient.getBackend(customRequestHeader)
-        val backendHeadersMetadata = "Backend request header custom-request-header is length ${customRequestHeader.length}. \nBackend response header server-timing is length = ${httpResponse.header("server-timing").length}. \nThe length of each of those headers exceeds max-header-size set to ${maxHeaderSize} but no exception is thrown and at least the backend response header is returned unaffected. \n\n\n"
+        val backendHeadersMetadata = "Backend request header custom-request-header is length ${customRequestHeader.length}. \nBackend response header server-timing is length ${httpResponse.header("server-timing").length}. \nThe length of each of those headers exceeds max-header-size set to ${maxHeaderSize} but no exception is thrown and at least the backend response header is returned unaffected. \n\n\n"
         return HttpResponse.ok(backendHeadersMetadata)
     }
 }
