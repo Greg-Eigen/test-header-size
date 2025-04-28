@@ -19,7 +19,7 @@ class Controller (
     fun getResponseWithHeader(): HttpResponse<String> {
         val customResponseHeader = "This is a custom response header value. The value of max-header-size set to ${maxHeaderSize} but evidently that is not being applied to this custom response header because the length of this response header value exceeds that setting but no exception is thrown and the value of the response header is returned unaffected."
 
-        return HttpResponse.ok("max-header-size set to ${maxHeaderSize}")
+        return HttpResponse.ok("max-header-size set to ${maxHeaderSize} bytes. \n\n\n")
             .header("custom-response-header", customResponseHeader)
     }
 
@@ -27,7 +27,7 @@ class Controller (
     fun makeBackendRequest(): HttpResponse<String> {
         val customRequestHeader = "xxxxxxxxxxx This  is  a  custom  request  header  value  that  is  100  characters  long. xxxxxxxxxx"
         val httpResponse: HttpResponse<String> = backendClient.getBackend(customRequestHeader)
-        val backendHeadersMetadata = "Backend request header custom-request-header is length ${customRequestHeader.length}.  Backend response header server-timing is length = ${httpResponse.header("server-timing").length}. The length of each of those headers exceeds max-header-size set to ${maxHeaderSize} but no exception is thrown and at least the backend response header is returned unaffected."
+        val backendHeadersMetadata = "Backend request header custom-request-header is length ${customRequestHeader.length}. \nBackend response header server-timing is length = ${httpResponse.header("server-timing").length}. \nThe length of each of those headers exceeds max-header-size set to ${maxHeaderSize} but no exception is thrown and at least the backend response header is returned unaffected. \n\n\n"
         return HttpResponse.ok(backendHeadersMetadata)
     }
 }
