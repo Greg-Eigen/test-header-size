@@ -17,13 +17,17 @@ class Controller (
 
     @Get("/test-response-header-size")
     fun getResponseWithHeader(): HttpResponse<String> {
-        var customResponseHeader: String = "This is a custom header value that is showing that even though the value of property micronaut.server.netty.max-header-size is set to 80, it is not being applied to this custom response header. This is evident by the fact that the response code is 200 instead of 413 despite this response header value being well over 80 bytes long."
+        val customResponseHeader = "This is a custom response header value. The value of max-header-size set to ${maxHeaderSize} but evidently that is not being applied to this custom response header because the length of this response header value exceeds that setting but no exception is thrown and the value of the response header is returned unaffected."
+
         return HttpResponse.ok("max-header-size set to ${maxHeaderSize}")
             .header("custom-response-header", customResponseHeader)
     }
 
     @Get("/make-backend-request")
     fun makeBackendRequest(): HttpResponse<String> {
-        return HttpResponse.ok(backendClient.getBackend())
+        val customRequestHeader = "xxxxxxxxxxx This  is  a  custom  request  header  value  that  is  100  characters  long. xxxxxxxxxx"
+        val httpResponse: HttpResponse<String> = backendClient.getBackend(customRequestHeader)
+        val backendHeadersMetadata = "Backend request header custom-request-header is length ${customRequestHeader.length}.  Backend response header server-timing is length = ${httpResponse.header("server-timing").length}. The length of each of those headers exceeds max-header-size set to ${maxHeaderSize} but no exception is thrown and at least the backend response header is returned unaffected."
+        return HttpResponse.ok(backendHeadersMetadata)
     }
 }
